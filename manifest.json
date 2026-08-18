@@ -1,11 +1,16 @@
 {
+  "id": "/ayet-goster/",
   "name": "Ayet Göster",
   "short_name": "Ayet Göster",
-  "start_url": "/ayet-goster/",
+  "start_url": "/ayet-goster/?source=homescreen",
+  "scope": "/ayet-goster/",
   "display": "standalone",
+  "display_override": ["standalone"],
+  "orientation": "portrait",
   "background_color": "#f6f2e9",
   "theme_color": "#f6f2e9",
   "icons": [
-    {"src":"icon.png","sizes":"703x703","type":"image/png","purpose":"any maskable"}
+    {"src":"icon.png","sizes":"703x703","type":"image/png","purpose":"any"},
+    {"src":"icon.png","sizes":"703x703","type":"image/png","purpose":"maskable"}
   ]
 }
