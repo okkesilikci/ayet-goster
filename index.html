@@ -27,28 +27,35 @@ button:active{transform:scale(.97)}
 </main>
 <script>
 const DATA_URL='https://raw.githubusercontent.com/Dfurkantopdas/haev-meals/main/meals/diyanet.json';
+const SURAH_NAMES=[
+'Fâtiha','Bakara','Âl-i İmrân','Nisâ','Mâide','En’âm','A’râf','Enfâl','Tevbe','Yûnus','Hûd','Yûsuf','Ra’d','İbrâhîm','Hicr','Nahl','İsrâ','Kehf','Meryem','Tâhâ','Enbiyâ','Hac','Mü’minûn','Nûr','Furkân','Şuarâ','Neml','Kasas','Ankebût','Rûm','Lokmân','Secde','Ahzâb','Sebe’','Fâtır','Yâsîn','Sâffât','Sâd','Zümer','Mü’min','Fussilet','Şûrâ','Zuhruf','Duhân','Câsiye','Ahkâf','Muhammed','Fetih','Hucurât','Kâf','Zâriyât','Tûr','Necm','Kamer','Rahmân','Vâkıa','Hadîd','Mücâdele','Haşr','Mümtehine','Saff','Cuma','Münâfikûn','Teğâbün','Talâk','Tahrîm','Mülk','Kalem','Hâkka','Meâric','Nûh','Cin','Müzzemmil','Müddessir','Kıyâmet','İnsân','Mürselât','Nebe’','Nâziât','Abese','Tekvîr','İnfitâr','Mutaffifîn','İnşikâk','Burûc','Târık','A’lâ','Gâşiye','Fecr','Beled','Şems','Leyl','Duhâ','İnşirâh','Tîn','Alak','Kadir','Beyyine','Zilzâl','Âdiyât','Kâria','Tekâsür','Asr','Hümeze','Fîl','Kureyş','Mâûn','Kevser','Kâfirûn','Nasr','Tebbet','İhlâs','Felak','Nâs'
+];
 let verses=[],last=-1;
 async function load(){
  if(verses.length)return;
  const r=await fetch(DATA_URL);
- if(!r.ok)throw Error();
+ if(!r.ok)throw Error('Veri yüklenemedi');
  const d=await r.json();
- for(const s of d.surahs) for(const v of s.verses)
-   verses.push({s:s.name,a:v.id,t:v.translation});
+ for(const s of d.surahs){
+   for(const v of s.verses){
+     verses.push({s:s.id,a:v.id,t:v.translation});
+   }
+ }
 }
 async function show(){
  const b=document.getElementById('show'),st=document.getElementById('status');
- b.disabled=true; st.textContent='Yükleniyor…';
+ b.disabled=true;st.textContent='Yükleniyor…';
  try{
    await load();
    let i;
    do{i=Math.floor(Math.random()*verses.length)}while(i===last&&verses.length>1);
    last=i;
    const v=verses[i];
-   document.getElementById('ref').textContent=v.s+' · '+v.a+'. Ayet';
+   const surah=SURAH_NAMES[Number(v.s)-1] || ('Sure '+v.s);
+   document.getElementById('ref').textContent=surah+' · '+v.a+'. Ayet';
    document.getElementById('meal').textContent=v.t;
    st.textContent='';
- }catch(e){st.textContent='İnternet bağlantısı gerekli.'}
+ }catch(e){st.textContent='İçerik yüklenemedi.';}
  b.disabled=false;
 }
 document.getElementById('show').onclick=show;
