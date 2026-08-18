@@ -1,0 +1,11 @@
+{
+  "name": "Ayet Göster",
+  "short_name": "Ayet Göster",
+  "start_url": "/ayet-goster/",
+  "display": "standalone",
+  "background_color": "#f6f2e9",
+  "theme_color": "#f6f2e9",
+  "icons": [
+    {"src":"icon.png","sizes":"703x703","type":"image/png","purpose":"any maskable"}
+  ]
+}
